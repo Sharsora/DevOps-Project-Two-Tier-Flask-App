@@ -38,7 +38,6 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
     * Select the **t2.micro** instance type for free-tier eligibility.
     * Create and assign a new key pair for SSH access.
 
-<img src="diagrams/01.png">
 
 2.  **Configure Security Group:**
     * Create a security group with the following inbound rules:
@@ -46,8 +45,6 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
         * **Type:** HTTP, **Protocol:** TCP, **Port:** 80, **Source:** Anywhere (0.0.0.0/0)
         * **Type:** Custom TCP, **Protocol:** TCP, **Port:** 5000 (for Flask), **Source:** Anywhere (0.0.0.0/0)
         * **Type:** Custom TCP, **Protocol:** TCP, **Port:** 8080 (for Jenkins), **Source:** Anywhere (0.0.0.0/0)
-
-<img src="diagrams/02.png">
 
 3.  **Connect to EC2 Instance:**
     * Use SSH to connect to the instance's public IP address.
