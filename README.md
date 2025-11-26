@@ -30,7 +30,7 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
                                                        | +-------------------------+ |
                                                        +-----------------------------+
 ```
-** Step 1: AWS EC2 Instance Preparation**
+** Step 1: AWS EC2 Instance Preparation
 
 1.  **Launch EC2 Instance:**
     * Navigate to the AWS EC2 console.
@@ -83,7 +83,7 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
 
 ---
 
-### Step 3: Jenkins Installation and Setup**
+### Step 3: Jenkins Installation and Setup
 
 1.  **Install Java (OpenJDK 17):**
     ```bash
@@ -121,7 +121,7 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
 
 ---
 
-### Step 4: GitHub Repository Configuration**
+### Step 4: GitHub Repository Configuration
 
 Ensure your GitHub repository contains the following three files.
 
@@ -241,7 +241,7 @@ pipeline {
 
 ---
 
-### Step 5: Jenkins Pipeline Creation and Execution**
+### Step 5: Jenkins Pipeline Creation and Execution
 
 1.  **Create a New Pipeline Job in Jenkins:**
     * From the Jenkins dashboard, select **New Item**.
