@@ -30,7 +30,7 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
                                                        | +-------------------------+ |
                                                        +-----------------------------+
 ```
-** Step 1: AWS EC2 Instance Preparation
+### Step 1: AWS EC2 Instance Preparation
 
 1.  **Launch EC2 Instance:**
     * Navigate to the AWS EC2 console.
@@ -57,7 +57,7 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
 
 ---
 
-### Step 2: Install Dependencies on EC2**
+### Step 2: Install Dependencies on EC2
 
 1.  **Update System Packages:**
     ```bash
