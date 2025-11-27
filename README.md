@@ -82,6 +82,14 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
    sudo docker network create two-tier -d bridge
    sudo docker network ls
    ```
+
+6. **Build MYSQL image & Run Container:**
+   ```bash
+   sudo docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
+   ```
+   ```bash
+   sudo docker ps
+   ```   
 ---
 
 ### Step 3: Jenkins Installation and Setup
