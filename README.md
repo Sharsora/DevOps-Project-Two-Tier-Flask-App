@@ -77,7 +77,11 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
     sudo usermod -aG docker $USER
     newgrp docker
     ```
-
+5. **Create a Bridge network
+   ```bash
+   sudo docker network create two-tier -d bridge
+   sudo docker network ls
+   ```
 ---
 
 ### Step 3: Jenkins Installation and Setup
