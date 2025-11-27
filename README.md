@@ -90,6 +90,34 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
    ```bash
    sudo docker ps
    ```   
+7. **Build Image two-tier-app from Dockerfile:**
+   ```bash
+   git clone https://github.com/Sharsora/DevOps-Project-Two-Tier-Flask-App.git
+   ```
+   ```bash
+   cd DevOps-Project-Two-Tier-Flask-App
+   ls -la
+   ```
+   ```bash
+   docker build -t two-tier-app .
+   ```
+   ```bash
+   docker images
+   ```
+
+   **Run two-tier-app Container**
+   ```bash
+   docker run -d -p 5000:5000 --network two-tier -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-app:latest
+   ```
+   ```bash
+   docker ps
+   docker logs xxxxx
+   ```
+
+   **Check output**
+
+   **Check Database**
+
 ---
 
 ### Step 3: Jenkins Installation and Setup
