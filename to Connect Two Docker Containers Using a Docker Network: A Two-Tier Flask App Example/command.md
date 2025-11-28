@@ -1,6 +1,8 @@
 **getting this error
 ```bash
-ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker ps -a CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES db1680ef50a3 flaskapp "python app.py" About a minute ago Exited (1) 1 second ago adoring_neumann 24dd771a52f8 mysql "docker-entrypoint.s…" 7 minutes ago Up 59 seconds 3306/tcp, 33060/tcp mysql ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker images REPOSITORY TAG IMAGE ID CREATED SIZE flaskapp latest 9592d8159f1d 4 minutes ago 363MB python 3.9-slim 085da638e1b8 3 weeks ago 122MB mysql latest f6b0ca07d79d 5 weeks ago 934MB ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$
+ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker ps -a
+CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
+db1680ef50a3 flaskapp "python app.py" About a minute ago Exited (1) 1 second ago adoring_neumann 24dd771a52f8 mysql "docker-entrypoint.s…" 7 minutes ago Up 59 seconds 3306/tcp, 33060/tcp mysql ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker images REPOSITORY TAG IMAGE ID CREATED SIZE flaskapp latest 9592d8159f1d 4 minutes ago 363MB python 3.9-slim 085da638e1b8 3 weeks ago 122MB mysql latest f6b0ca07d79d 5 weeks ago 934MB ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$
 ```
 
 
