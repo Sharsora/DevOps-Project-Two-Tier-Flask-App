@@ -12,8 +12,56 @@ mysql latest f6b0ca07d79d 5 weeks ago 934MB
 ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$
 ```
 
-
-
+**Checked container logs
+```bash
+ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker logs adoring_neumann
+Traceback (most recent call last):
+  File "/app/app.py", line 46, in <module>
+    init_db()
+  File "/app/app.py", line 18, in init_db
+    cur = mysql.connection.cursor()
+  File "/usr/local/lib/python3.9/site-packages/flask_mysqldb/__init__.py", line 94, in connection
+    ctx.mysql_db = self.connect
+  File "/usr/local/lib/python3.9/site-packages/flask_mysqldb/__init__.py", line 81, in connect
+    return MySQLdb.connect(**kwargs)
+  File "/usr/local/lib/python3.9/site-packages/MySQLdb/__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/MySQLdb/connections.py", line 200, in __init__
+    super().__init__(*args, **kwargs2)
+MySQLdb.OperationalError: (2005, "Unknown server host 'mysql' (-3)")
+Traceback (most recent call last):
+  File "/app/app.py", line 46, in <module>
+    init_db()
+  File "/app/app.py", line 18, in init_db
+    cur = mysql.connection.cursor()
+  File "/usr/local/lib/python3.9/site-packages/flask_mysqldb/__init__.py", line 94, in connection
+    ctx.mysql_db = self.connect
+  File "/usr/local/lib/python3.9/site-packages/flask_mysqldb/__init__.py", line 81, in connect
+    return MySQLdb.connect(**kwargs)
+  File "/usr/local/lib/python3.9/site-packages/MySQLdb/__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/MySQLdb/connections.py", line 200, in __init__
+    super().__init__(*args, **kwargs2)
+MySQLdb.OperationalError: (1045, "Access denied for user 'default_user'@'172.18.0.3' (using password: YES)")
+Traceback (most recent call last):
+  File "/app/app.py", line 46, in <module>
+    init_db()
+  File "/app/app.py", line 18, in init_db
+    cur = mysql.connection.cursor()
+  File "/usr/local/lib/python3.9/site-packages/flask_mysqldb/__init__.py", line 94, in connection
+    ctx.mysql_db = self.connect
+  File "/usr/local/lib/python3.9/site-packages/flask_mysqldb/__init__.py", line 81, in connect
+    return MySQLdb.connect(**kwargs)
+  File "/usr/local/lib/python3.9/site-packages/MySQLdb/__init__.py", line 121, in Connect
+    return Connection(*args, **kwargs)
+  File "/usr/local/lib/python3.9/site-packages/MySQLdb/connections.py", line 200, in __init__
+    super().__init__(*args, **kwargs2)
+MySQLdb.OperationalError: (1045, "Access denied for user 'default_user'@'172.18.0.3' (using password: YES)")
+ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$
+```
+**logs se problem clear hai. Do alag-alag errors dikh rahe
+  Unknown server host 'mysql' (-3) — Flask container build/run karte waqt app ne mysql hostname ko resolve nahi kiya (ya MySQL service ready nahi thi).
+  Access denied for user 'default_user' ... — jab connection mil gaya, to credentials galat the.
 
 ```bash
 ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker network ls
@@ -46,10 +94,16 @@ CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS       
 69f86134c35e   mysql      "docker-entrypoint.s…"   2 seconds ago   Up 2 seconds   0.0.0.0:3306->3306/tcp, [::]:3306->3306/tcp, 33060/tcp   mysql
 6bdc9dba786c   flaskapp   "python app.py"          4 minutes ago   Created                                                                 flaskapp
 ```
+**Solution
+Quick dev fix (fastest) — use correct credentials and link to mysql
+Agar aap mysql container already run kar chuke ho (jaisa hamare logs me dikh raha hai), run Flask container with --link and env vars to match MySQL root:
+
+# stop/remove old broken container
 ```bash
 ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker rm -f flaskapp || true
 flaskapp
 ```
+# run flask with link and env vars so host 'mysql' resolves and credentials ok
 ```bash
 ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker run -d --name flaskapp --network two-tier \            
   --link mysql:mysql \
@@ -69,3 +123,9 @@ CONTAINER ID   IMAGE      COMMAND                  CREATED              STATUS  
 69f86134c35e   mysql      "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:3306->3306/tcp, [::]:3306->3306/tcp, 33060/tcp   mysql
 ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$
 ```
+
+Why: `--link mysql:mysql` makes the name `mysql` resolvable inside the new container (legacy but works). Also ensure your app reads these env vars (next section). If your app currently uses different user (default_user), either change env to match that user/password OR create that DB user in MySQL (commands below).
+
+Recommended: Use docker-compose (best and clean)
+
+Create a docker-compose.yml in your project root — this will make service name resolution automatic and allow depends_on + healthcheck.
