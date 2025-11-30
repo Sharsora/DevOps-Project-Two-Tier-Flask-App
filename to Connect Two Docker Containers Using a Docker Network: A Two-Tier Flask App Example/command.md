@@ -1,4 +1,4 @@
-**getting this error
+**getting this error**
 ```bash
 ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker ps -a
 CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
@@ -12,7 +12,7 @@ mysql latest f6b0ca07d79d 5 weeks ago 934MB
 ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$
 ```
 
-**Checked container logs
+**Checked container logs**
 ```bash
 ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker logs adoring_neumann
 Traceback (most recent call last):
@@ -59,9 +59,9 @@ Traceback (most recent call last):
 MySQLdb.OperationalError: (1045, "Access denied for user 'default_user'@'172.18.0.3' (using password: YES)")
 ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$
 ```
-**logs se problem clear hai. Do alag-alag errors dikh rahe
-  Unknown server host 'mysql' (-3) — Flask container build/run karte waqt app ne mysql hostname ko resolve nahi kiya (ya MySQL service ready nahi thi).
-  Access denied for user 'default_user' ... — jab connection mil gaya, to credentials galat the.
+logs se problem clear hai. Do alag-alag errors dikh rahe
+- Unknown server host 'mysql' (-3) — Flask container build/run karte waqt app ne mysql hostname ko resolve nahi kiya (ya MySQL service ready nahi thi).
+- Access denied for user 'default_user' ... — jab connection mil gaya, to credentials galat the.
 
 ```bash
 ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker network ls
@@ -94,7 +94,8 @@ CONTAINER ID   IMAGE      COMMAND                  CREATED         STATUS       
 69f86134c35e   mysql      "docker-entrypoint.s…"   2 seconds ago   Up 2 seconds   0.0.0.0:3306->3306/tcp, [::]:3306->3306/tcp, 33060/tcp   mysql
 6bdc9dba786c   flaskapp   "python app.py"          4 minutes ago   Created                                                                 flaskapp
 ```
-**Solution
+**Solution**
+
 Quick dev fix (fastest) — use correct credentials and link to mysql
 Agar aap mysql container already run kar chuke ho (jaisa hamare logs me dikh raha hai), run Flask container with --link and env vars to match MySQL root:
 
