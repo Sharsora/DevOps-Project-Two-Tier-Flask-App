@@ -1,3 +1,89 @@
+### AWS EC2 Instance Preparation
+
+1.  **Launch EC2 Instance:**
+    * Navigate to the AWS EC2 console.
+    * Launch a new instance using the **Ubuntu 22.04 LTS** AMI.
+    * Select the **t2.micro** instance type for free-tier eligibility.
+    * Create and assign a new key pair for SSH access.
+
+
+2.  **Configure Security Group:**
+    * Create a security group with the following inbound rules:
+        * **Type:** SSH, **Protocol:** TCP, **Port:** 22, **Source:** Your IP
+        * **Type:** HTTP, **Protocol:** TCP, **Port:** 80, **Source:** Anywhere (0.0.0.0/0)
+        * **Type:** Custom TCP, **Protocol:** TCP, **Port:** 5000 (for Flask), **Source:** Anywhere (0.0.0.0/0)
+        * **Type:** Custom TCP, **Protocol:** TCP, **Port:** 8080 (for Jenkins), **Source:** Anywhere (0.0.0.0/0)
+
+3.  **Connect to EC2 Instance:**
+    * Use SSH to connect to the instance's public IP address.
+    ```bash
+    ssh -i /path/to/key.pem ubuntu@<ec2-public-ip>
+    ```
+
+---
+
+### Install Dependencies on EC2
+
+1.  **Update System Packages:**
+    ```bash
+    sudo apt update && sudo apt upgrade -y
+    ```
+
+2.  **Install Docker:**
+    ```bash
+    sudo apt install docker.io -y
+    ```
+
+3.  **Start and Enable Docker:**
+    ```bash
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    ```
+
+    ```bash
+    git clone https://github.com/Sharsora/DevOps-Project-Two-Tier-Flask-App.git
+    ```
+4. **Create a Bridge network:**
+   ```bash
+   sudo docker network create two-tier -d bridge
+   sudo docker network ls
+   ```
+
+5. **Build MYSQL image & Run Container:**
+   ```bash
+   sudo docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
+   ```
+   ```bash
+   sudo docker ps -a
+   ```   
+6. **Build Image two-tier-app from Dockerfile:**
+   ```bash
+   cd DevOps-Project-Two-Tier-Flask-App
+   ls -la
+   ```
+   ```bash
+   docker build -t two-tier-app .
+   ```
+   ```bash
+   docker images
+   ```
+
+7. **Run two-tier-app Container**
+   ```bash
+   docker run -d -p 5000:5000 --network two-tier -e MYSQL_HOST=mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_DB=devops two-tier-app:latest
+   ```
+   ```bash
+   docker ps
+   docker logs xxxxx
+   ```
+
+   **Check output**
+
+   **Check Database**
+
+
+
+
 **getting this error**
 ```bash
 ubuntu@ip-172-31-2-8:~/DevOps-Project-Two-Tier-Flask-App$ sudo docker ps -a
