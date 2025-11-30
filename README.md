@@ -77,6 +77,9 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
     sudo usermod -aG docker $USER
     newgrp docker
     ```
+    ```bash
+    git clone https://github.com/Sharsora/DevOps-Project-Two-Tier-Flask-App.git
+    ```
 5. **Create a Bridge network:**
    ```bash
    sudo docker network create two-tier -d bridge
@@ -88,12 +91,9 @@ In this project, I built a fully automated CI/CD pipeline to deploy a two-tier F
    sudo docker run -d --name mysql --network two-tier -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
    ```
    ```bash
-   sudo docker ps
+   sudo docker ps -a
    ```   
 7. **Build Image two-tier-app from Dockerfile:**
-   ```bash
-   git clone https://github.com/Sharsora/DevOps-Project-Two-Tier-Flask-App.git
-   ```
    ```bash
    cd DevOps-Project-Two-Tier-Flask-App
    ls -la
