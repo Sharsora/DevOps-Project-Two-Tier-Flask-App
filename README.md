@@ -246,6 +246,11 @@ networks:
   two-tier:
 ```
 
+- Volume : I added it to make sure my MYSQL data doesn't disapear when the container restart.
+- Health check: I set it up to automatically check if each container is running fine.
+- Depends on: I want my flask app to start only after MY SQL is fully ready.
+
+
 #### **Jenkinsfile**
 This file contains the pipeline-as-code definition for Jenkins.
 ```groovy
