@@ -249,7 +249,7 @@ networks:
 - Volume : I added it to make sure my MYSQL data doesn't disapear when the container restart.
 - Health check: I set it up to automatically check if each container is running fine.
 - Depends on: I want my flask app to start only after MY SQL is fully ready.
-
+- While running docker-compose file, my flask app container starts before MYSQL causing a race condition. To prevent this I use condition: service_healthy so Flask waits until MYSQL is ready.
 
 #### **Jenkinsfile**
 This file contains the pipeline-as-code definition for Jenkins.
